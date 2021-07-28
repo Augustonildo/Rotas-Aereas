@@ -1,20 +1,18 @@
 #include <iostream>
 
 using namespace std;
-
-int main(int argc, char *argv[])
+int main()
 {
     int numeroAeroportos, numeroRotas;
     cin >> numeroAeroportos >> numeroRotas;
-
-    int** matrizRotas = (int**) malloc(numeroAeroportos * sizeof(int));
+    int** matrizRotas = (int**) malloc(numeroAeroportos * sizeof(int*));
     for(int i = 0; i < numeroAeroportos; i++){
         matrizRotas[i] = (int*) malloc(numeroAeroportos * sizeof(int));
     }
 
-    for (int i = 0; i < numeroRotas; i++)
+    for (int i = 0; i < numeroAeroportos; i++)
     {
-        for(int j = 0; j < numeroRotas; j++){
+        for(int j = 0; j < numeroAeroportos; j++){
             matrizRotas[i][j] = 0;
         }   
     }
