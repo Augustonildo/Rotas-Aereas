@@ -2,7 +2,7 @@
 #include "Componente.hpp"
 #include <iostream>
 
-#define MAX_AEROPORTOS 20
+#define MAX_AEROPORTOS 1000
 using namespace std;
 
 struct Pilha
@@ -166,7 +166,13 @@ int main()
     }
 
     if (componentesSemEntrada > componentesSemSaida)
+    {
         cout << componentesSemEntrada << endl;
-    cout << componentesSemSaida << endl;
+    }
+    else
+    {
+        cout << componentesSemSaida << endl;
+    }
+
     return 0;
 }

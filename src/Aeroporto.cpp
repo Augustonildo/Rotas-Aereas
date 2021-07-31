@@ -22,16 +22,6 @@ bool Aeroporto::PertenceListaDestinos(int idDestino)
     return false;
 }
 
-bool Aeroporto::PertenceListaOrigens(int idDestino)
-{
-    for (int i = 0; i < this->numeroOrigens; i++)
-    {
-        if (this->listaOrigens[i] == idDestino)
-            return true;
-    }
-    return false;
-}
-
 void Aeroporto::AdicionaAeroportoListaDestinos(int id)
 {
     this->listaDestinos[this->numeroDestinos] = id;

@@ -1,4 +1,4 @@
-#define MAX_AEROPORTOS 20
+#define MAX_AEROPORTOS 1000
 
 class Componente
 {
