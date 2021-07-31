@@ -41,24 +41,18 @@ void primeiraDfsKosaraju(Aeroporto *listaAeroportos, int numeroAeroportos)
 {
     int aeroportosVisitados[numeroAeroportos];
     for (int i = 0; i < numeroAeroportos; i++)
-    {
         aeroportosVisitados[i] = 0;
-    }
 
     for (int i = 0; i < numeroAeroportos; i++)
         if (!aeroportosVisitados[i])
-        {
             dfsNatural(listaAeroportos[i], listaAeroportos, aeroportosVisitados);
-        }
 }
 
 int segundaDfsKosaraju(Aeroporto *listaAeroportos, int numeroAeroportos)
 {
     int aeroportosVisitados[numeroAeroportos];
     for (int i = 0; i < numeroAeroportos; i++)
-    {
         aeroportosVisitados[i] = 0;
-    }
 
     int idAeroporto, i = 0;
     while ((idAeroporto = pilha.Desempilha()) != -1)
@@ -76,54 +70,23 @@ int **alocarEspacoMatrizInt(int M, int N)
 {
     int **matriz = (int **)malloc(M * sizeof(int *));
     for (int i = 0; i < M; i++)
-    {
         matriz[i] = (int *)malloc(N * sizeof(int));
-    }
 
     for (int i = 0; i < M; i++)
-    {
         for (int j = 0; j < N; j++)
-        {
             matriz[i][j] = 0;
-        }
-    }
     return matriz;
 }
 
 void limparEspacoMatriz(int **matriz, int M)
 {
     for (int i = 0; i < M; i++)
-    {
         free(matriz[i]);
-    }
     free(matriz);
 }
 
-int main()
+void ordenaComponentesFortementeConectados(Aeroporto *listaAeroportos, int numeroComponentes)
 {
-    int numeroAeroportos, numeroRotas;
-    cin >> numeroAeroportos >> numeroRotas;
-    int **matrizRotas = alocarEspacoMatrizInt(numeroAeroportos, numeroAeroportos);
-
-    Aeroporto listaAeroportos[numeroAeroportos];
-    for (int i = 0; i < numeroAeroportos; i++)
-    {
-        listaAeroportos[i] = Aeroporto(i + 1);
-    }
-
-    for (int i = 0; i < numeroRotas; i++)
-    {
-        int origem, destino;
-        cin >> origem >> destino;
-        matrizRotas[origem - 1][destino - 1] = 1;
-        listaAeroportos[origem - 1].AdicionaAeroportoListaDestinos(destino);
-        listaAeroportos[destino - 1].AdicionaAeroportoListaOrigens(origem);
-    }
-
-    primeiraDfsKosaraju(listaAeroportos, numeroAeroportos);
-    int numeroComponentes = segundaDfsKosaraju(listaAeroportos, numeroAeroportos);
-
-    limparEspacoMatriz(matrizRotas, numeroAeroportos);
     int **matrizComponentes = alocarEspacoMatrizInt(numeroComponentes, numeroComponentes);
     for (int i = 0; i < numeroComponentes; i++)
     {
@@ -153,7 +116,10 @@ int main()
         }
     }
     limparEspacoMatriz(matrizComponentes, numeroComponentes);
+}
 
+int calculaRotasNecessarias(int numeroComponentes)
+{
     int componentesSemEntrada = 0, componentesSemSaida = 0;
     for (int i = 0; i < numeroComponentes; i++)
     {
@@ -164,13 +130,31 @@ int main()
     }
 
     if (componentesSemEntrada > componentesSemSaida)
+        return componentesSemEntrada;
+    return componentesSemSaida;
+}
+
+int main()
+{
+    int numeroAeroportos, numeroRotas;
+    cin >> numeroAeroportos >> numeroRotas;
+
+    Aeroporto listaAeroportos[numeroAeroportos];
+    for (int i = 0; i < numeroAeroportos; i++)
+        listaAeroportos[i] = Aeroporto(i + 1);
+
+    for (int i = 0; i < numeroRotas; i++)
     {
-        cout << componentesSemEntrada << endl;
+        int origem, destino;
+        cin >> origem >> destino;
+        listaAeroportos[origem - 1].AdicionaAeroportoListaDestinos(destino);
+        listaAeroportos[destino - 1].AdicionaAeroportoListaOrigens(origem);
     }
-    else
-    {
-        cout << componentesSemSaida << endl;
-    }
+
+    primeiraDfsKosaraju(listaAeroportos, numeroAeroportos);
+    int numeroComponentes = segundaDfsKosaraju(listaAeroportos, numeroAeroportos);
+    ordenaComponentesFortementeConectados(listaAeroportos, numeroComponentes);
+    cout << calculaRotasNecessarias(numeroComponentes) << endl;
 
     return 0;
 }
