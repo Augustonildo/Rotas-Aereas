@@ -1,27 +1,12 @@
 #include "Aeroporto.hpp"
 #include "Componente.hpp"
+#include "Pilha.hpp"
 #include <iostream>
 
 #define MAX_AEROPORTOS 1000
 using namespace std;
 
-struct Pilha
-{
-    int topo;
-    int itens[MAX_AEROPORTOS];
-} pilha = {-1, {}};
-
-void empilha(int i)
-{
-    pilha.topo++;
-    pilha.itens[pilha.topo] = i;
-}
-
-int desempilha()
-{
-    return pilha.topo <= -1 ? -1 : pilha.itens[pilha.topo--];
-}
-
+Pilha pilha = Pilha();
 void dfsNatural(Aeroporto aeroporto, Aeroporto *listaAeroportos, int *aeroportosVisitados)
 {
     aeroportosVisitados[aeroporto.id - 1] = 1;
@@ -33,7 +18,7 @@ void dfsNatural(Aeroporto aeroporto, Aeroporto *listaAeroportos, int *aeroportos
             dfsNatural(aeroportoDestino, listaAeroportos, aeroportosVisitados);
         }
     }
-    empilha(aeroporto.id);
+    pilha.Empilha(aeroporto.id);
 }
 
 Componente listaComponentes[MAX_AEROPORTOS];
@@ -76,7 +61,7 @@ int segundaDfsKosaraju(Aeroporto *listaAeroportos, int numeroAeroportos)
     }
 
     int idAeroporto, i = 0;
-    while ((idAeroporto = desempilha()) != -1)
+    while ((idAeroporto = pilha.Desempilha()) != -1)
     {
         if (!aeroportosVisitados[idAeroporto - 1])
         {
@@ -128,6 +113,7 @@ int main()
 
     primeiraDfsKosaraju(listaAeroportos, numeroAeroportos);
     int numeroComponentes = segundaDfsKosaraju(listaAeroportos, numeroAeroportos);
+
     int **matrizComponentes = alocarEspacoMatrizInt(numeroComponentes, numeroComponentes);
     for (int i = 0; i < numeroComponentes; i++)
     {
