@@ -29,6 +29,7 @@ INCLUDE_FOLDER = ./include/
 BIN_FOLDER = ./
 OBJ_FOLDER = ./obj/
 SRC_FOLDER = ./src/
+TMP_OUT = .testsResult
 
 # all sources, objs, and header files
 MAIN = Main
@@ -41,6 +42,9 @@ $(OBJ_FOLDER)%.o: $(SRC_FOLDER)%.cpp
 
 all: $(OBJ)
 	$(CC) $(CXXFLAGS) -o $(BIN_FOLDER)$(TARGET) $(OBJ)
+
+test: $(TARGET)
+		@bash tests.sh $(BIN_FOLDER)$(TARGET) $(TMP_OUT)
 
 clean:
 	@rm -rf $(OBJ_FOLDER)* $(BIN_FOLDER)*

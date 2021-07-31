@@ -24,5 +24,7 @@ int main()
         matrizRotas[origem-1][destino-1] = 1;
     }
 
+    cout << 3 << endl;
+
    return 0;
 }
