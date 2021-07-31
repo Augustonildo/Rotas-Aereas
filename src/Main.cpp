@@ -90,6 +90,15 @@ int **alocarEspacoMatrizInt(int M, int N)
     return matriz;
 }
 
+void limparEspacoMatriz(int **matriz, int M)
+{
+    for (int i = 0; i < M; i++)
+    {
+        free(matriz[i]);
+    }
+    free(matriz);
+}
+
 int main()
 {
     int numeroAeroportos, numeroRotas;
@@ -114,6 +123,7 @@ int main()
     primeiraDfsKosaraju(listaAeroportos, numeroAeroportos);
     int numeroComponentes = segundaDfsKosaraju(listaAeroportos, numeroAeroportos);
 
+    limparEspacoMatriz(matrizRotas, numeroAeroportos);
     int **matrizComponentes = alocarEspacoMatrizInt(numeroComponentes, numeroComponentes);
     for (int i = 0; i < numeroComponentes; i++)
     {
@@ -142,6 +152,8 @@ int main()
             }
         }
     }
+    limparEspacoMatriz(matrizComponentes, numeroComponentes);
+
     int componentesSemEntrada = 0, componentesSemSaida = 0;
     for (int i = 0; i < numeroComponentes; i++)
     {
