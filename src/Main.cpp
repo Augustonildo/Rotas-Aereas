@@ -153,6 +153,13 @@ int main()
 
     primeiraDfsKosaraju(listaAeroportos, numeroAeroportos);
     int numeroComponentes = segundaDfsKosaraju(listaAeroportos, numeroAeroportos);
+
+    if (numeroComponentes <= 1)
+    {
+        cout << 0 << endl;
+        return 0;
+    }
+
     ordenaComponentesFortementeConectados(listaAeroportos, numeroComponentes);
     cout << calculaRotasNecessarias(numeroComponentes) << endl;
 
